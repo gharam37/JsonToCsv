@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSON TO CSV</title>
+    <style>
+        .prompt {
+            font-size: 16px;
+            color: brown;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .container {
+            width: 100%;
+        }
+        .left-pane {
+            width: 100%;
+            float: left;
+        }
+        .right-pane {
+            width: 100%;
+            float: right;
+        }
+        .submit-name {
+            clear: both;
+        }
+    </style>
+</head>
+  <body>
+
+    <h1>Hey Put a Json String</h1>
+
+<form method='post' action="/">
+    <div class="container">
+        <div class="prompt left-pane">
+            <span>Give Json</span>
+        </div>
+        <div class="right-pane">
+            <input type="text" style="height:200px;width:200px;" id="Json" name="Json" />
+        </div>
+    </div>
+    <div class="submit-name">
+        <input type="submit" value="Get CSV" />
+    </div>
+    <textarea readonly rows="4" cols="50" id="output">
+    </textarea>
+    </div>
+</form>
+
+  </body>
+</html>

@@ -22,16 +22,39 @@ app.get('/',function(req,res){
 
 })
 app.post('/',urlencodedParser,function(req,res){
-   var JsonData = JSON.parse(req.body.Json);
+   var JsonData = JSON.parse('['+req.body.Json+']');
    var jsonexport = require('jsonexport');
-  var myObj = { "name":"John", "age":30, "car":null };
    jsonexport(JsonData,function(err, csv){
    if(err) return console.log(err);
     console.log(csv);
+    var fs = require('fs')
+    var util = require('util')
+    fs.writeFileSync('uploads/output.csv', csv, 'utf-8')
+
+
 
   })
 
 })
+function downloadCSV(args) {
+    var data, filename, link;
+
+    var csv = convertArrayOfObjectsToCSV({
+        data: stockData
+    });
+    if (csv == null) return;
+
+    filename = args.filename || 'export.csv';
+
+    if (!csv.match(/^data:text\/csv/i)) {
+        csv = 'data:text/csv;charset=utf-8,' + csv;
+    }
+    data = encodeURI(csv);
+    link = document.createElement('a');
+    link.setAttribute('href', data);
+    link.setAttribute('download', filename);
+    link.click();
+}
 /*app.post('/upload',function(req,res){
   console.log(req.files);
   if(req.files.upfile){

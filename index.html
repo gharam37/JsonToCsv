@@ -2,6 +2,9 @@
 <html>
 <head>
     <title>JSON TO CSV</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
         .prompt {
             font-size: 16px;
@@ -23,13 +26,23 @@
         .submit-name {
             clear: both;
         }
+        .table {
+                border-collapse: collapse;
+                border: 2px black solid;
+                font: 12px sans-serif;
+            }
+
+        .td {
+                border: 1px black solid;
+                padding: 5px;
+        }
     </style>
 </head>
   <body>
 
     <h1>Hey Put a Json String</h1>
 
-<form method='post' action="/">
+<form method='post' action="/" onsubmit="return downloadCSV({ filename: "stock-data.csv" });'">
     <div class="container">
         <div class="prompt left-pane">
             <span>Give Json</span>
@@ -40,11 +53,72 @@
     </div>
     <div class="submit-name">
         <input type="submit" value="Get CSV" />
+        <a href='#' onclick='downloadCSV({ filename: "stock-data.csv" });'>Download CSV</a>
+
     </div>
     <textarea readonly rows="4" cols="50" id="output">
     </textarea>
     </div>
 </form>
+
+
+<script type="text/javascript">
+    var stockData =  document.getElementById("Json").value;
+
+    console.log("Watup?");
+    console.log(stockData);
+    function convertArrayOfObjectsToCSV(args) {
+        var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+        data = args.data || null;
+        if (data == null || !data.length) {
+            return null;
+        }
+
+        columnDelimiter = args.columnDelimiter || ',';
+        lineDelimiter = args.lineDelimiter || '\n';
+
+        keys = Object.keys(data[0]);
+
+        result = '';
+        result += keys.join(columnDelimiter);
+        result += lineDelimiter;
+
+        data.forEach(function(item) {
+            ctr = 0;
+            keys.forEach(function(key) {
+                if (ctr > 0) result += columnDelimiter;
+
+                result += item[key];
+                ctr++;
+            });
+            result += lineDelimiter;
+        });
+
+        return result;
+    }
+
+    function downloadCSV(args) {
+      var data, filename, link;
+          var csv = convertArrayOfObjectsToCSV({
+              data: stockData
+          });
+          if (csv == null) return;
+
+          filename = args.filename || 'export.csv';
+
+          if (!csv.match(/^data:text\/csv/i)) {
+              csv = 'data:text/csv;charset=utf-8,' + csv;
+          }
+          data = encodeURI(csv);
+
+          link = document.createElement('a');
+          link.setAttribute('href', data);
+          link.setAttribute('download', filename);
+          link.click();
+    }
+</script>
+
 
   </body>
 </html>

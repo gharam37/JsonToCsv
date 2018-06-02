@@ -27,8 +27,7 @@ app.post('/',urlencodedParser,function(req,res){
   var myObj = { "name":"John", "age":30, "car":null };
    jsonexport(JsonData,function(err, csv){
    if(err) return console.log(err);
-    console.log(csv)
-    output=csv
+    console.log(csv);
 
   })
 

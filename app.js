@@ -10,17 +10,29 @@ var app = express();
 var upload = require('express-fileupload');
 var bodyParser = require('body-parser')
 const http = require('http');
+var ejs = require('ejs');
+
 http.Server(app).listen(80); // make server listen on port 80
 var success='No'
+var csv=null
 
 app.use(upload()); // configure middleware
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 console.log("Server Started at port 80");
 
+app.set("view engine","ejs")
+
+
 app.get('/',function(req,res){
-  res.sendFile(__dirname+'/index.html');
+  //res.sendFile(__dirname+'/index.html');
+  res.render('view.ejs',{ title: 'get' });
+
+
+
 
 })
+
+
 app.post('/',urlencodedParser,function(req,res){
    var JsonData = JSON.parse('['+req.body.Json+']');
    var jsonexport = require('jsonexport');
@@ -30,31 +42,19 @@ app.post('/',urlencodedParser,function(req,res){
     var fs = require('fs')
     var util = require('util')
     fs.writeFileSync('uploads/output.csv', csv, 'utf-8')
+    res.render('view.ejs',{ title: csv });
+
+
+
+
+
 
 
 
   })
 
 })
-function downloadCSV(args) {
-    var data, filename, link;
 
-    var csv = convertArrayOfObjectsToCSV({
-        data: stockData
-    });
-    if (csv == null) return;
-
-    filename = args.filename || 'export.csv';
-
-    if (!csv.match(/^data:text\/csv/i)) {
-        csv = 'data:text/csv;charset=utf-8,' + csv;
-    }
-    data = encodeURI(csv);
-    link = document.createElement('a');
-    link.setAttribute('href', data);
-    link.setAttribute('download', filename);
-    link.click();
-}
 /*app.post('/upload',function(req,res){
   console.log(req.files);
   if(req.files.upfile){

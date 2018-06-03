@@ -55,33 +55,32 @@ app.post('/',urlencodedParser,function(req,res){
 
 })
 
-/*app.post('/upload',function(req,res){
+
+app.post('/upload',function(req,res){
   console.log(req.files);
   if(req.files.upfile){
     var file = req.files.upfile,
       name = file.name,
       type = file.mimetype;
+      data = file.data;
+      var JsonData = JSON.parse('['+data+']');
+      console.log(JsonData);
       var jsonexport = require('jsonexport');
-    jsonexport(file,function(err, csv){
-    if(err) return console.log(err);
-    console.log(csv)
-    var uploadpath = __dirname + '/uploads/' + name;
-    file.mv(uploadpath,function(err){
-      if(err){
-        console.log("File Upload Failed",name,err);
-        res.send("Error Occured!")
-      }
-      else {
-      console.log("File Uploaded",name);
-      success='Yes'
-      res.send('Done! Uploading files')
-      }
-    });
-    });
+
+      jsonexport(JsonData,function(err, csv){
+      if(err) return console.log(err);
+       console.log(csv);
+       var fs = require('fs')
+       var util = require('util')
+       fs.writeFileSync('uploads/output.csv', csv, 'utf-8')
+       res.render('view.ejs',{ title: csv });
+
+     })
+
 
   }
   else {
     res.send("No File selected !");
     res.end();
   };
-})*/
+})

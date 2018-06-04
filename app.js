@@ -25,7 +25,7 @@ app.set("view engine","ejs")
 
 app.get('/',function(req,res){
   //res.sendFile(__dirname+'/index.html');
-  res.render('view.ejs',{ title: 'get' });
+  res.render('view.ejs',{ title: 'get'  ,warn:'' });
 
 
 
@@ -33,8 +33,16 @@ app.get('/',function(req,res){
 })
 
 app.get('/download',function(req,res){
-  //res.sendFile(__dirname+'/index.html');
-  res.download(__dirname + '/uploads/output.csv', 'csvfile.csv');
+  // res.download(__dirname + '/uploads/output.csv', 'csvfile.csv');
+
+  res.download(__dirname + '/uploads/output.csv', 'csvfile.csv', function(err){
+  if (err) {
+    // Handle error, but keep in mind the response may be partially-sent
+    // so check res.headersSent
+  } else {
+    // decrement a download credit, etc.
+  }
+});
 
 
 
@@ -66,7 +74,7 @@ app.post('/',urlencodedParser,function(req,res){
 })
 
 
-app.post('/upload',function(req,res){
+app.post('/download',urlencodedParser,function(req,res){
   if(req.files.upfile){
     var file = req.files.upfile,
       name = file.name,
@@ -82,14 +90,16 @@ app.post('/upload',function(req,res){
        var util = require('util')
        fs.writeFileSync('uploads/output.csv', csv, 'utf-8')
 
-       res.render('view.ejs',{ title: csv });
+       res.render('view.ejs',{ title: csv,warn:'Uploaded' });
 
      })
 
 
   }
   else {
-    res.send("No File selected !");
+    res.render('view.ejs', {title:'',warn:'Downloaded latest converted file' });
+
     res.end();
-  };
+  }
+
 })

@@ -33,14 +33,11 @@ app.get('/',function(req,res){
 })
 
 app.get('/download',function(req,res){
-  // res.download(__dirname + '/uploads/output.csv', 'csvfile.csv');
 
   res.download(__dirname + '/uploads/output.csv', 'csvfile.csv', function(err){
   if (err) {
-    // Handle error, but keep in mind the response may be partially-sent
-    // so check res.headersSent
+    console.log(err);
   } else {
-    // decrement a download credit, etc.
   }
 });
 

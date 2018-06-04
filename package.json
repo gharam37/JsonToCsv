@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/gharam37/JsonToCsv#readme",
   "dependencies": {
-    "angular": "^1.7.0",
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.3",

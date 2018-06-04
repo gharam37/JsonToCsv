@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>JSON TO CSV</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -16,7 +17,7 @@ height: 500px;
     }
 
     input[type=submit] {
-        width: 10%;
+        width: 50%;
         background-color: #4CAF50;
         color: white;
         padding: 14px 20px;
@@ -24,7 +25,6 @@ height: 500px;
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        size:   10px;
 
     }
 
@@ -55,17 +55,19 @@ height: 500px;
 <form method='post' action="/" >
 
 
-        <div class="right-pane">
+        <div class="w3-third">
             <h1>Give a Json String</h1>
 
             <input type="text"  id="Json" name="Json" />
 
-        </div>
-        <div class="submit-name">
-            <input type="submit" value="Get CSV" />
+            <div class="submit-name">
+                <input type="submit" value="Get CSV" />
+
+            </div>
 
         </div>
-        <div class="left-pane">
+
+        <div class="w3-third">
             <h1>You output shows here</h1>
 
             <textarea id="CSV" style="height:500px;width:500px;"><%=title%></textarea>
@@ -75,6 +77,7 @@ height: 500px;
 
 
 
+    <div class="w3-third">
 
 </form>
 
@@ -85,12 +88,13 @@ height: 500px;
 <form class="fileupload" action="download" method="post" enctype="multipart/form-data">
   <input type="file" name="upfile" value="" >
   <input type="submit" value="Upload file"  />
-  <input type="submit" id="download" onClick="window.open('/download');">
-       <span class="icon">Download file</span>
+  <input type="submit" value="Download " id="download" onClick="window.open('/download');">
   </input>
 </form>
 
 <h1><%=warn %></h1>
+</div>
+
 
 
 

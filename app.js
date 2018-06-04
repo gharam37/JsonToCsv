@@ -25,7 +25,7 @@ app.set("view engine","ejs")
 
 app.get('/',function(req,res){
   //res.sendFile(__dirname+'/index.html');
-  res.render('view.ejs',{ title: 'get'  ,warn:'' });
+  res.render('view.ejs',{ title: 'Your output Shows here'  ,warn:'' });
 
 
 
@@ -60,7 +60,7 @@ app.post('/',urlencodedParser,function(req,res){
     var fs = require('fs')
     var util = require('util')
     fs.writeFileSync('uploads/output.csv', csv, 'utf-8')
-    res.render('view.ejs',{ title: csv });
+    res.render('view.ejs',{ title: csv ,warn:''});
 
 
 
@@ -97,7 +97,7 @@ app.post('/download',urlencodedParser,function(req,res){
 
   }
   else {
-    res.render('view.ejs', {title:'',warn:'Downloaded latest converted file' });
+    res.render('view.ejs', {title:' ',warn:'Downloaded latest converted file' });
 
     res.end();
   }

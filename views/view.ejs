@@ -2,77 +2,88 @@
 <html>
 <head>
     <title>JSON TO CSV</title>
-    <script src="/node_modules/angular/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="http://localhost:80/socket.io/socket.io.js"></script>
     <style>
-        .prompt {
-            font-size: 16px;
-            color: brown;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .container {
-            width: 100%;
-        }
-        .left-pane {
-            width: 100%;
-            float: left;
-        }
-        .right-pane {
-            width: 100%;
-            float: right;
-        }
-        .submit-name {
-            clear: both;
-        }
-        .table {
-                border-collapse: collapse;
-                border: 2px black solid;
-                font: 12px sans-serif;
-            }
+  input[type=text], select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
 
-        .td {
-                border: 1px black solid;
-                padding: 5px;
-        }
+    input[type=submit] {
+        width: 10%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        size:   10px;
+
+    }
+
+
+
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    div {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+
+    }
+    body {
+      background-color: #f2f2f2;
+
+
+    }
+
     </style>
 </head>
   <body>
 
-    <h1>Hey Put a Json String</h1>
 
-<form method='post' action="/" onsubmit="return downloadCSV({ filename: "stock-data.csv" });'">
-    <div class="container">
-        <div class="prompt left-pane">
-            <span>Give Json</span>
-        </div>
+<form method='post' action="/" >
+
+
         <div class="right-pane">
-            <input type="text" style="height:200px;width:200px;" id="Json" name="Json" />
+            <h1>Give a Json String</h1>
+
+            <input type="text" style="height:500px;width:500px;" id="Json" name="Json" />
+
         </div>
+        <div class="left-pane">
+            <h1>You output shows here</h1>
+
+            <textarea id="CSV" style="height:500px;width:500px;"><%=title%></textarea>
+        </div>
+
     </div>
     <div class="submit-name">
         <input type="submit" value="Get CSV" />
-        <a href='#' onclick='downloadCSV({ filename: "stock-data.csv" });'>Download CSV</a>
 
     </div>
 
 
-    </div>
+
 </form>
 
-<div class="title">
-    <textarea rows="4" cols="50">
-    <%=title %>
-   </textarea>
-</div>
+
 
 <h1>Upload File Here</h1>
 
 <form class="fileupload" action="download" method="post" enctype="multipart/form-data">
-  <input type="file" name="upfile" value="">
+  <input type="file" name="upfile" value="" >
   <input type="submit" value="Upload file"  />
   <input type="submit" id="download" onClick="window.open('/download');">
        <span class="icon">Download file</span>

@@ -32,24 +32,16 @@ app.get('/',function(req,res){
 
 })
 
-// app.get('/download',function(req,res){
-//   //res.sendFile(__dirname+'/index.html');
-//   res.download(__dirname + '/uploads/output.csv', 'csvfile.csv');
-//
-//   var fs = require('fs');
-//
-// fs.unlink(__dirname + '/uploads/output.csv', function(error) {
-//     if (error) {
-//         throw error;
-//     }
-//     console.log('Deleted dog.jpg!!');
-// });
-//
-//
-//
-//
-//
-// })
+app.get('/download',function(req,res){
+  //res.sendFile(__dirname+'/index.html');
+  res.download(__dirname + '/uploads/output.csv', 'csvfile.csv');
+
+
+
+
+
+
+})
 
 app.post('/',urlencodedParser,function(req,res){
    var JsonData = JSON.parse('['+req.body.Json+']');

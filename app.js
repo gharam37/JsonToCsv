@@ -32,6 +32,24 @@ app.get('/',function(req,res){
 
 })
 
+// app.get('/download',function(req,res){
+//   //res.sendFile(__dirname+'/index.html');
+//   res.download(__dirname + '/uploads/output.csv', 'csvfile.csv');
+//
+//   var fs = require('fs');
+//
+// fs.unlink(__dirname + '/uploads/output.csv', function(error) {
+//     if (error) {
+//         throw error;
+//     }
+//     console.log('Deleted dog.jpg!!');
+// });
+//
+//
+//
+//
+//
+// })
 
 app.post('/',urlencodedParser,function(req,res){
    var JsonData = JSON.parse('['+req.body.Json+']');
@@ -57,14 +75,12 @@ app.post('/',urlencodedParser,function(req,res){
 
 
 app.post('/upload',function(req,res){
-  console.log(req.files);
   if(req.files.upfile){
     var file = req.files.upfile,
       name = file.name,
       type = file.mimetype;
       data = file.data;
       var JsonData = JSON.parse('['+data+']');
-      console.log(JsonData);
       var jsonexport = require('jsonexport');
 
       jsonexport(JsonData,function(err, csv){
@@ -73,6 +89,7 @@ app.post('/upload',function(req,res){
        var fs = require('fs')
        var util = require('util')
        fs.writeFileSync('uploads/output.csv', csv, 'utf-8')
+
        res.render('view.ejs',{ title: csv });
 
      })

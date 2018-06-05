@@ -34,7 +34,7 @@ app.get('/',function(req,res){
 
 app.get('/download',function(req,res){
 
-  res.download(__dirname + '/uploads/output.csv', 'csvfile.csv', function(err){
+  res.download(__dirname + '/views/output.csv', 'csvfile.csv', function(err){
   if (err) {
     console.log(err);
   } else {
@@ -56,7 +56,7 @@ app.post('/',urlencodedParser,function(req,res){
     console.log(csv);
     var fs = require('fs')
     var util = require('util')
-    fs.writeFileSync('uploads/output.csv', csv, 'utf-8')
+    fs.writeFileSync('views/output.csv', csv, 'utf-8')
     res.render('view.ejs',{ title: csv ,warn:''});
 
 
@@ -85,7 +85,7 @@ app.post('/download',urlencodedParser,function(req,res){
        console.log(csv);
        var fs = require('fs')
        var util = require('util')
-       fs.writeFileSync('uploads/output.csv', csv, 'utf-8')
+       fs.writeFileSync('views/output.csv', csv, 'utf-8')
 
        res.render('view.ejs',{ title: csv,warn:'Uploaded' });
 

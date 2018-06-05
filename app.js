@@ -59,6 +59,21 @@ else{
 })
 
 app.post('/',urlencodedParser,function(req,res){
+  var fs = require('fs')
+
+
+  fs.stat('./views/output.csv', function (err, stats) {
+console.log(stats);//here we got all information of file in stats variable
+
+if (err) {
+    return console.error(err);
+}
+
+fs.unlink('./views/output.csv',function(err){
+     if(err) return console.log(err);
+     console.log('file deleted successfully');
+});
+});
   try {
     var JsonData = JSON.parse('['+req.body.Json+']');
     var jsonexport = require('jsonexport');
@@ -82,6 +97,21 @@ app.post('/',urlencodedParser,function(req,res){
 
 
 app.post('/download',urlencodedParser,function(req,res){
+  var fs = require('fs')
+
+
+  fs.stat('./views/output.csv', function (err, stats) {
+console.log(stats);//here we got all information of file in stats variable
+
+if (err) {
+    return console.error(err);
+}
+
+fs.unlink('./views/output.csv',function(err){
+     if(err) return console.log(err);
+     console.log('file deleted successfully');
+});
+});
 
   if(req.files.upfile){
     var file = req.files.upfile,
@@ -115,6 +145,8 @@ app.post('/download',urlencodedParser,function(req,res){
   }
   else if(req.body.hasOwnProperty('download')) {
     res.render('view.ejs', {title:'Your output Shows here ',warn:'Downloaded latest converted file' });
+
+
 
     res.end();
   }

@@ -24,7 +24,6 @@ app.set("view engine","ejs")
 
 
 app.get('/',function(req,res){
-  //res.sendFile(__dirname+'/index.html');
   res.render('view.ejs',{ title: 'Your output Shows here'  ,warn:'' });
 
 

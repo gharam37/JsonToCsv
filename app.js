@@ -11,6 +11,8 @@ var upload = require('express-fileupload');
 var bodyParser = require('body-parser')
 const http = require('http');
 var ejs = require('ejs');
+app.set('port', process.env.PORT || 3000);
+
 
 http.Server(app).listen(80); // make server listen on port 80
 var success='No'

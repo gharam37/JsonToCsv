@@ -18,7 +18,7 @@ var csv=null
 
 app.use(upload()); // configure middleware
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-console.log("Server Started at port 80");
+console.log("Server Started at port 3000");
 
 app.set("view engine","ejs")
 
@@ -33,6 +33,8 @@ app.get('/',function(req,res){
 })
 
 app.get('/download',function(req,res){
+  var fs = require('fs');
+if (fs.existsSync(__dirname + '/views/output.csv')) {
 
   res.download(__dirname + '/views/output.csv', 'csvfile.csv', function(err){
   if (err) {
@@ -40,6 +42,15 @@ app.get('/download',function(req,res){
   } else {
   }
 });
+}
+else{
+
+  res.render('view.ejs',{ title: 'Your output shows here'  ,warn:'Upload the file first' });
+
+
+}
+
+
 
 
 
@@ -49,34 +60,36 @@ app.get('/download',function(req,res){
 })
 
 app.post('/',urlencodedParser,function(req,res){
-   var JsonData = JSON.parse('['+req.body.Json+']');
-   var jsonexport = require('jsonexport');
-   jsonexport(JsonData,function(err, csv){
-   if(err) return console.log(err);
-    console.log(csv);
-    var fs = require('fs')
-    var util = require('util')
-    fs.writeFileSync('views/output.csv', csv, 'utf-8')
-    res.render('view.ejs',{ title: csv ,warn:''});
+  try {
+    var JsonData = JSON.parse('['+req.body.Json+']');
+    var jsonexport = require('jsonexport');
+    jsonexport(JsonData,function(err, csv){
+    if(err) return console.log(err);
+     console.log(csv);
+     var fs = require('fs')
+     var util = require('util')
+     fs.writeFileSync('views/output.csv', csv, 'utf-8')
+     res.render('view.ejs',{ title: csv ,warn:''});
 
+   })
+    } catch(e) {
+      res.render('view.ejs',{ title: 'Wrong Json Format' ,warn:''});
 
+        alert(e); // error in the above string (in this case, yes)!
+    }
 
-
-
-
-
-
-  })
 
 })
 
 
 app.post('/download',urlencodedParser,function(req,res){
+
   if(req.files.upfile){
     var file = req.files.upfile,
       name = file.name,
       type = file.mimetype;
       data = file.data;
+      try {
       var JsonData = JSON.parse('['+data+']');
       var jsonexport = require('jsonexport');
 
@@ -90,13 +103,28 @@ app.post('/download',urlencodedParser,function(req,res){
        res.render('view.ejs',{ title: csv,warn:'Uploaded' });
 
      })
+   }
+
+   catch(e) {
+     res.render('view.ejs',{ title:'Your output shows here', warn:'File is not in Json format'});
+
+       alert(e); // error in the above string (in this case, yes)!
+   }
+
 
 
   }
-  else {
-    res.render('view.ejs', {title:' ',warn:'Downloaded latest converted file' });
+  else if(req.body.hasOwnProperty('download')) {
+    res.render('view.ejs', {title:'Your output Shows here ',warn:'Downloaded latest converted file' });
 
     res.end();
   }
+  else if(req.body.hasOwnProperty('upload')) {
+    res.render('view.ejs', {title:'Your output Shows here ',warn:'Upload the file first' });
+    console.log('Here');
+
+    res.end();
+  }
+
 
 })

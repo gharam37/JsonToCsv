@@ -7,6 +7,15 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
+    h1 {
+    display: block;
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    }
   input[type=text], select {
 
 padding:  0.4em;
@@ -25,6 +34,7 @@ height: 500px;
         border: none;
         border-radius: 4px;
         cursor: pointer;
+
 
     }
 
@@ -83,12 +93,22 @@ height: 500px;
 
 
 
-<h1>Upload File Here</h1>
+<h1>Data too big ? upload a file here</h1>
 
 <form class="fileupload" action="download" method="post" enctype="multipart/form-data">
-  <input type="file" name="upfile" value="" >
-  <input type="submit" value="Upload file"  />
-  <input type="submit" value="Download " id="download" onClick="window.open('/download');">
+  <input type="file" name="upfile" value="" style="
+  width: 50%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #45a049;
+  " </input>
+  <input type="submit" name="upload" value="Upload file"  />
+  <input type="submit" value="Download " id="download" name="download" onClick="window.open('/download');">
   </input>
 </form>
 

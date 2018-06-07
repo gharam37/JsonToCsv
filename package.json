@@ -23,5 +23,8 @@
     "express": "^4.16.3",
     "express-fileupload": "^0.4.0",
     "jsonexport": "^2.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
   }
 }
